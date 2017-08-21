@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using InAppPurchasesApi.Models;
 using InAppPurchasesApi.DataAccessLayer;
@@ -33,7 +31,7 @@ namespace InAppPurchasesApi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GameId,Version")] Game game)
+        public ActionResult Create([Bind(Include = "GameId,Version,Name")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +59,7 @@ namespace InAppPurchasesApi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GameId,Version")] Game game)
+        public ActionResult Edit([Bind(Include = "GameId,Version,Name")] Game game)
         {
             if (ModelState.IsValid)
             {

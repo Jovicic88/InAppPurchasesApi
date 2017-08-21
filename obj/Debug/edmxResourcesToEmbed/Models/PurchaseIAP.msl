@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Games">
       <EntityTypeMapping TypeName="PurchasesIAPModel.Game">
         <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="GameId" ColumnName="GameId" />
           <ScalarProperty Name="Version" ColumnName="Version" />
         </MappingFragment>

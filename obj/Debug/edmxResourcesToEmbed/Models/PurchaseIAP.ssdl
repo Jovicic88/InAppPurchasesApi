@@ -6,6 +6,7 @@
     </Key>
     <Property Name="GameId" Type="int" Nullable="false" />
     <Property Name="Version" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Gun">
     <Key>
@@ -31,7 +32,7 @@
     <Key>
       <PropertyRef Name="LevelId" />
     </Key>
-    <Property Name="LevelId" Type="int" Nullable="false" />
+    <Property Name="LevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="GunId" Type="int" Nullable="false" />
     <Property Name="GunLevel" Type="int" Nullable="false" />
     <Property Name="Cost" Type="int" Nullable="false" />

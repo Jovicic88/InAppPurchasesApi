@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
 using InAppPurchasesApi.Models;
 using InAppPurchasesApi.DataAccessLayer;
@@ -26,17 +20,6 @@ namespace InAppPurchasesApi.Controllers
             return View(purchaseRepository.GetLevelsToList());
         }
 
-        // GET: LevelsView/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var level = purchaseRepository.GetLevelById(id);
-            if (level == null)
-                return HttpNotFound();
-            return View(level);
-        }
-
         // GET: LevelsView/Create
         public ActionResult Create()
         {
@@ -49,7 +32,7 @@ namespace InAppPurchasesApi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LevelId,GunId,LevelValue,Cost,Damage,BulletsInClip,BulletsMax")] Level level)
+        public ActionResult Create([Bind(Include = "LevelId,GunId,GunLevel,Cost,Damage,BulletsInClip,BulletsMax")] Level level)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +63,7 @@ namespace InAppPurchasesApi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LevelId,GunId,LevelValue,Cost,Damage,BulletsInClip,BulletsMax")] Level level)
+        public ActionResult Edit([Bind(Include = "LevelId,GunId,GunLevel,Cost,Damage,BulletsInClip,BulletsMax")] Level level)
         {
             if (ModelState.IsValid)
             {

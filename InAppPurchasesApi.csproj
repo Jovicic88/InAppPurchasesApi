@@ -312,7 +312,6 @@
     <Content Include="Views\LevelsView\Delete.cshtml" />
     <Content Include="Views\GamesView\Create.cshtml" />
     <Content Include="Views\GamesView\Delete.cshtml" />
-    <Content Include="Views\GamesView\Details.cshtml" />
     <Content Include="Views\GamesView\Edit.cshtml" />
     <Content Include="Views\GamesView\Index.cshtml" />
   </ItemGroup>

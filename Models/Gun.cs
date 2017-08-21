@@ -37,7 +37,7 @@ namespace InAppPurchasesApi.Models
         public bool TwoHanded { get; set; }
 
         public Helpers.GunType GunType { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Level> Levels { get; set; }
     }

@@ -23,6 +23,7 @@ namespace InAppPurchasesApi.Models
     
         public int GameId { get; set; }
         public int Version { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserGame> UserGames { get; set; }

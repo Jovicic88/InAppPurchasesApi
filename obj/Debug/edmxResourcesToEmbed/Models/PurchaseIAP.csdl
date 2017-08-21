@@ -8,6 +8,7 @@
     <Property Name="Version" Type="Int32" Nullable="false" />
     <NavigationProperty Name="UserGames" Relationship="Self.FK_UserGame_Game" FromRole="Game" ToRole="UserGame" />
     <NavigationProperty Name="UserWeapons" Relationship="Self.FK_UserWeapon_Game" FromRole="Game" ToRole="UserWeapon" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="User">
     <Key>

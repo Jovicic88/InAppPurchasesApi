@@ -9,6 +9,9 @@
 
 namespace InAppPurchasesApi.Models
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class Level
     {
         public int LevelId { get; set; }

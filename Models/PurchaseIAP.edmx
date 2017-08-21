@@ -11,6 +11,7 @@
           </Key>
           <Property Name="GameId" Type="int" Nullable="false" />
           <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Gun">
           <Key>
@@ -36,7 +37,7 @@
           <Key>
             <PropertyRef Name="LevelId" />
           </Key>
-          <Property Name="LevelId" Type="int" Nullable="false" />
+          <Property Name="LevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GunId" Type="int" Nullable="false" />
           <Property Name="GunLevel" Type="int" Nullable="false" />
           <Property Name="Cost" Type="int" Nullable="false" />
@@ -178,6 +179,7 @@
           <Property Name="Version" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserGames" Relationship="Self.FK_UserGame_Game" FromRole="Game" ToRole="UserGame" />
           <NavigationProperty Name="UserWeapons" Relationship="Self.FK_UserWeapon_Game" FromRole="Game" ToRole="UserWeapon" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -350,6 +352,7 @@
           <EntitySetMapping Name="Games">
             <EntityTypeMapping TypeName="PurchasesIAPModel.Game">
               <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="GameId" ColumnName="GameId" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
               </MappingFragment>

@@ -9,6 +9,9 @@
 
 namespace InAppPurchasesApi.Models
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class UserGame
     {
         public int UserGameId { get; set; }
