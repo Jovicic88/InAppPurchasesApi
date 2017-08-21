@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PurchasesIAPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Game">
+    <Key>
+      <PropertyRef Name="GameId" />
+    </Key>
+    <Property Name="GameId" Type="Int32" Nullable="false" />
+    <Property Name="Version" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserGames" Relationship="Self.FK_UserGame_Game" FromRole="Game" ToRole="UserGame" />
+    <NavigationProperty Name="UserWeapons" Relationship="Self.FK_UserWeapon_Game" FromRole="Game" ToRole="UserWeapon" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UserGames" Relationship="Self.FK_UserGame_User" FromRole="User" ToRole="UserGame" />
+    <NavigationProperty Name="UserWeapons" Relationship="Self.FK_UserWeapon_User" FromRole="User" ToRole="UserWeapon" />
+  </EntityType>
+  <EntityType Name="UserGame">
+    <Key>
+      <PropertyRef Name="UserGameId" />
+    </Key>
+    <Property Name="UserGameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GameId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Achivements" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Coins" Type="Int32" Nullable="false" />
+    <Property Name="Diamonds" Type="Int32" Nullable="false" />
+    <Property Name="Premium" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Game" Relationship="Self.FK_UserGame_Game" FromRole="UserGame" ToRole="Game" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserGame_User" FromRole="UserGame" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserWeapon">
+    <Key>
+      <PropertyRef Name="UserWeaponId" />
+    </Key>
+    <Property Name="UserWeaponId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="GameId" Type="Int32" Nullable="false" />
+    <Property Name="WeaponId" Type="Int32" Nullable="false" />
+    <Property Name="GunLevel" Type="Int32" Nullable="false" />
+    <Property Name="Experience" Type="Int32" Nullable="false" />
+    <Property Name="BoostActive" Type="Boolean" Nullable="false" />
+    <Property Name="Unlocked" Type="Boolean" Nullable="false" />
+    <Property Name="BoostEndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Game" Relationship="Self.FK_UserWeapon_Game" FromRole="UserWeapon" ToRole="Game" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserWeapon_User" FromRole="UserWeapon" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_UserGame_Game">
+    <End Role="Game" Type="Self.Game" Multiplicity="1" />
+    <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="UserGame">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserWeapon_Game">
+    <End Role="Game" Type="Self.Game" Multiplicity="1" />
+    <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="UserWeapon">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGame_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserGame">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserWeapon_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserWeapon">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PurchasesIAPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Games" EntityType="Self.Game" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserGames" EntityType="Self.UserGame" />
+    <EntitySet Name="UserWeapons" EntityType="Self.UserWeapon" />
+    <AssociationSet Name="FK_UserGame_Game" Association="Self.FK_UserGame_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserGame" EntitySet="UserGames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserWeapon_Game" Association="Self.FK_UserWeapon_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserWeapon" EntitySet="UserWeapons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGame_User" Association="Self.FK_UserGame_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserGame" EntitySet="UserGames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserWeapon_User" Association="Self.FK_UserWeapon_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserWeapon" EntitySet="UserWeapons" />
+    </AssociationSet>
+    <EntitySet Name="Guns" EntityType="PurchasesIAPModel.Gun" />
+    <EntitySet Name="Levels" EntityType="PurchasesIAPModel.Level" />
+    <AssociationSet Name="FK_Level_Level" Association="PurchasesIAPModel.FK_Level_Level">
+      <End Role="Gun" EntitySet="Guns" />
+      <End Role="Level" EntitySet="Levels" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Gun">
+    <Key>
+      <PropertyRef Name="GunId" />
+    </Key>
+    <Property Name="GunId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="NameStatic" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Pause" Type="Double" Nullable="false" />
+    <Property Name="GunLevel" Type="Int32" Nullable="false" />
+    <Property Name="BoostCost" Type="Int32" Nullable="false" />
+    <Property Name="Unlocked" Type="Boolean" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="PathToPrefab" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="PathToIcon" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="PathToAchivementIcon" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="PathToAchivementIconLocked" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="PathToWeaponAudio" Type="String" Nullable="false" MaxLength="191" FixedLength="false" Unicode="false" />
+    <Property Name="TwoHanded" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Levels" Relationship="PurchasesIAPModel.FK_Level_Level" FromRole="Gun" ToRole="Level" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="LevelId" Type="Int32" Nullable="false" />
+    <Property Name="GunId" Type="Int32" Nullable="false" />
+    <Property Name="GunLevel" Type="Int32" Nullable="false" />
+    <Property Name="Cost" Type="Int32" Nullable="false" />
+    <Property Name="Damage" Type="Int32" Nullable="false" />
+    <Property Name="BulletsInClip" Type="Int32" Nullable="false" />
+    <Property Name="BulletsMax" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Gun" Relationship="PurchasesIAPModel.FK_Level_Level" FromRole="Level" ToRole="Gun" />
+  </EntityType>
+  <Association Name="FK_Level_Level">
+    <End Type="PurchasesIAPModel.Gun" Role="Gun" Multiplicity="1" />
+    <End Type="PurchasesIAPModel.Level" Role="Level" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gun">
+        <PropertyRef Name="GunId" />
+      </Principal>
+      <Dependent Role="Level">
+        <PropertyRef Name="GunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a254adb7b4154bfab4a91b4a60051a2a" Name="Diagram1">
+        <EntityTypeShape EntityType="PurchasesIAPModel.Game" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PurchasesIAPModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PurchasesIAPModel.UserGame" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PurchasesIAPModel.UserWeapon" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="PurchasesIAPModel.FK_UserGame_Game" ManuallyRouted="false" />
+        <AssociationConnector Association="PurchasesIAPModel.FK_UserWeapon_Game" ManuallyRouted="false" />
+        <AssociationConnector Association="PurchasesIAPModel.FK_UserGame_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PurchasesIAPModel.FK_UserWeapon_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PurchasesIAPModel.Gun" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="PurchasesIAPModel.Level" Width="1.5" PointX="3" PointY="8.75" />
+        <AssociationConnector Association="PurchasesIAPModel.FK_Level_Level" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

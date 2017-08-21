@@ -1,0 +1,62 @@
+﻿@model IEnumerable<InAppPurchasesApi.Models.Level>
+
+@{
+    ViewBag.Title = "Levels";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Add New Level", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GunLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Damage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BulletsInClip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BulletsMax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gun.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GunLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Damage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BulletsInClip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BulletsMax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gun.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LevelId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LevelId })
+        </td>
+    </tr>
+}
+
+</table>

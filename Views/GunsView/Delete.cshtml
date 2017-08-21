@@ -1,0 +1,136 @@
+﻿@model InAppPurchasesApi.Models.Gun
+
+@{
+    ViewBag.Title = "Delete Gun";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Gun</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameStatic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameStatic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pause)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pause)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GunLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GunLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoostCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoostCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unlocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unlocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PathToPrefab)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PathToPrefab)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PathToIcon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PathToIcon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PathToAchivementIcon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PathToAchivementIcon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PathToAchivementIconLocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PathToAchivementIconLocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PathToWeaponAudio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PathToWeaponAudio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TwoHanded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TwoHanded)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

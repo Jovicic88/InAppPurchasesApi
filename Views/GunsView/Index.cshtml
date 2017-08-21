@@ -1,0 +1,110 @@
+﻿@model IEnumerable<InAppPurchasesApi.Models.Gun>
+
+@{
+    ViewBag.Title = "Guns";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Add New Gun", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameStatic)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pause)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GunLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoostCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unlocked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathToPrefab)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathToIcon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathToAchivementIcon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathToAchivementIconLocked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PathToWeaponAudio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TwoHanded)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameStatic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pause)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GunLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BoostCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unlocked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PathToPrefab)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PathToIcon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PathToAchivementIcon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PathToAchivementIconLocked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PathToWeaponAudio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TwoHanded)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.GunId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.GunId })
+        </td>
+    </tr>
+}
+
+</table>
