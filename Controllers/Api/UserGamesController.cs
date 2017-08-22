@@ -20,9 +20,11 @@ namespace InAppPurchasesApi.Controllers
 
         // GET: api/UserGames/userId/gameId
         [ResponseType(typeof(UserGame))]
-        public IHttpActionResult GetUserGame(int userId, int gameId)
+        [HttpGet]
+        [Route("api/usergames/{UserId}/{GameId}")]
+        public IHttpActionResult GetUserGame(int UserId, int GameId)
         {
-            var userGame = purchaseRepository.GetUserGame(userId, gameId);
+            var userGame = purchaseRepository.GetUserGame(UserId, GameId);
             if (userGame == null)
                 return NotFound();
 
@@ -41,10 +43,16 @@ namespace InAppPurchasesApi.Controllers
             if (_game == null)
                 return BadRequest();
 
-            _game.Coins = userGame.Coins;
-            _game.Achivements = userGame.Achivements;
-            _game.Diamonds = userGame.Diamonds;
-            _game.Premium = userGame.Premium;
+            if (!string.IsNullOrEmpty(userGame.Coins.ToString()))
+                _game.Coins = userGame.Coins;
+            if (!string.IsNullOrEmpty(userGame.Achivements))
+                _game.Achivements = userGame.Achivements;
+            if (!string.IsNullOrEmpty(userGame.Diamonds.ToString()))
+                _game.Diamonds = userGame.Diamonds;
+            if (!string.IsNullOrEmpty(userGame.Premium.ToString()))
+                _game.Premium = userGame.Premium;
+            if (!string.IsNullOrEmpty(userGame.HasGame.ToString()))
+                _game.HasGame = userGame.HasGame;
 
             purchaseRepository.EditUserGame(_game);
 
@@ -66,6 +74,9 @@ namespace InAppPurchasesApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (userGame.Achivements == null)
+                userGame.Achivements = "";
 
             purchaseRepository.AddUserGame(userGame);
             purchaseRepository.Save();

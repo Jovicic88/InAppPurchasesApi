@@ -14,16 +14,39 @@ namespace InAppPurchasesApi.Controllers
             this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
         }
 
-        // GET: api/Users/5
+        // POST: api/Users
         [ResponseType(typeof(User))]
-        public IHttpActionResult GetUser(User _user)
+        public IHttpActionResult PostUser(User user)
         {
-            var user = purchaseRepository.GetUser(_user);
-            if (user == null)
-                return NotFound();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok(user);
+            if (!purchaseRepository.CheckIfUserExists(user.Email))
+            {
+                purchaseRepository.AddUser(user);
+                purchaseRepository.Save();
+            }
+            else
+            {
+                user = purchaseRepository.GetUser(user);
+                if (user == null)
+                    return BadRequest("Check your password!");
+                return Ok(user);
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
         }
+
+        //// GET: api/Users/5
+        //[ResponseType(typeof(User))]
+        //public IHttpActionResult GetUser(User _user)
+        //{
+        //    var user = purchaseRepository.GetUser(_user);
+        //    if (user == null)
+        //        return NotFound();
+
+        //    return Ok(user);
+        //}
 
         //// PUT: api/Users/5
         //[ResponseType(typeof(void))]
@@ -50,22 +73,6 @@ namespace InAppPurchasesApi.Controllers
 
         //    return StatusCode(HttpStatusCode.NoContent);
         //}
-
-        // POST: api/Users
-        [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            if (!purchaseRepository.CheckIfUserExists(user.Email))
-            {
-                purchaseRepository.AddUser(user);
-                purchaseRepository.Save();
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
-        }
 
         //// DELETE: api/Users/5
         //[ResponseType(typeof(User))]

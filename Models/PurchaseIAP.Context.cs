@@ -18,6 +18,7 @@ namespace InAppPurchasesApi.Models
         public PurchasesIAPEntities()
             : base("name=PurchasesIAPEntities")
         {
+            Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

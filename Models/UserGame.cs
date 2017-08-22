@@ -18,9 +18,10 @@ namespace InAppPurchasesApi.Models
         public int GameId { get; set; }
         public int UserId { get; set; }
         public string Achivements { get; set; }
-        public int Coins { get; set; }
-        public int Diamonds { get; set; }
-        public bool Premium { get; set; }
+        public Nullable<int> Coins { get; set; }
+        public Nullable<int> Diamonds { get; set; }
+        public Nullable<bool> Premium { get; set; }
+        public bool HasGame { get; set; }
     
         public virtual Game Game { get; set; }
         public virtual User User { get; set; }

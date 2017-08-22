@@ -60,10 +60,11 @@
           <Property Name="UserGameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GameId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Achivements" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Coins" Type="int" Nullable="false" />
-          <Property Name="Diamonds" Type="int" Nullable="false" />
-          <Property Name="Premium" Type="bit" Nullable="false" />
+          <Property Name="Achivements" Type="varchar" MaxLength="100" />
+          <Property Name="Coins" Type="int" />
+          <Property Name="Diamonds" Type="int" />
+          <Property Name="Premium" Type="bit" />
+          <Property Name="HasGame" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserWeapon">
           <Key>
@@ -73,11 +74,11 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="GameId" Type="int" Nullable="false" />
           <Property Name="WeaponId" Type="int" Nullable="false" />
-          <Property Name="GunLevel" Type="int" Nullable="false" />
-          <Property Name="Experience" Type="int" Nullable="false" />
-          <Property Name="BoostActive" Type="bit" Nullable="false" />
-          <Property Name="Unlocked" Type="bit" Nullable="false" />
-          <Property Name="BoostEndTime" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="GunLevel" Type="int" />
+          <Property Name="Experience" Type="int" />
+          <Property Name="BoostActive" Type="bit" />
+          <Property Name="Unlocked" Type="bit" />
+          <Property Name="BoostEndTime" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Level_Level">
           <End Role="Gun" Type="Self.Gun" Multiplicity="1" />
@@ -198,12 +199,13 @@
           <Property Name="UserGameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GameId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Achivements" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Coins" Type="Int32" Nullable="false" />
-          <Property Name="Diamonds" Type="Int32" Nullable="false" />
-          <Property Name="Premium" Type="Boolean" Nullable="false" />
+          <Property Name="Achivements" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Coins" Type="Int32" />
+          <Property Name="Diamonds" Type="Int32" />
+          <Property Name="Premium" Type="Boolean" />
           <NavigationProperty Name="Game" Relationship="Self.FK_UserGame_Game" FromRole="UserGame" ToRole="Game" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserGame_User" FromRole="UserGame" ToRole="User" />
+          <Property Name="HasGame" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserWeapon">
           <Key>
@@ -213,11 +215,11 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="GameId" Type="Int32" Nullable="false" />
           <Property Name="WeaponId" Type="Int32" Nullable="false" />
-          <Property Name="GunLevel" Type="Int32" Nullable="false" />
-          <Property Name="Experience" Type="Int32" Nullable="false" />
-          <Property Name="BoostActive" Type="Boolean" Nullable="false" />
-          <Property Name="Unlocked" Type="Boolean" Nullable="false" />
-          <Property Name="BoostEndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GunLevel" Type="Int32" />
+          <Property Name="Experience" Type="Int32" />
+          <Property Name="BoostActive" Type="Boolean" />
+          <Property Name="Unlocked" Type="Boolean" />
+          <Property Name="BoostEndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Game" Relationship="Self.FK_UserWeapon_Game" FromRole="UserWeapon" ToRole="Game" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserWeapon_User" FromRole="UserWeapon" ToRole="User" />
         </EntityType>
@@ -370,6 +372,7 @@
           <EntitySetMapping Name="UserGames">
             <EntityTypeMapping TypeName="PurchasesIAPModel.UserGame">
               <MappingFragment StoreEntitySet="UserGame">
+                <ScalarProperty Name="HasGame" ColumnName="HasGame" />
                 <ScalarProperty Name="UserGameId" ColumnName="UserGameId" />
                 <ScalarProperty Name="GameId" ColumnName="GameId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

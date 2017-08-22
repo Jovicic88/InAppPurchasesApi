@@ -41,11 +41,16 @@ namespace InAppPurchasesApi.Controllers
             if (_weapon == null)
                 return BadRequest();
 
-            _weapon.GunLevel = userWeapon.GunLevel;
-            _weapon.Unlocked = userWeapon.Unlocked;
-            _weapon.Experience = userWeapon.Experience;
-            _weapon.BoostActive = userWeapon.BoostActive;
-            _weapon.BoostEndTime = userWeapon.BoostEndTime;
+            if (!string.IsNullOrEmpty(userWeapon.GunLevel.ToString()))
+                _weapon.GunLevel = userWeapon.GunLevel;
+            if(!string.IsNullOrEmpty(userWeapon.Unlocked.ToString()))
+                _weapon.Unlocked = userWeapon.Unlocked;
+            if (!string.IsNullOrEmpty(userWeapon.Experience.ToString()))
+                _weapon.Experience = userWeapon.Experience;
+            if (!string.IsNullOrEmpty(userWeapon.BoostActive.ToString()))
+                _weapon.BoostActive = userWeapon.BoostActive;
+            if (!string.IsNullOrEmpty(userWeapon.BoostEndTime))
+                _weapon.BoostEndTime = userWeapon.BoostEndTime;
 
             purchaseRepository.EditUserWeapon(_weapon);
 
@@ -72,6 +77,9 @@ namespace InAppPurchasesApi.Controllers
 
             if (_userWeapon != null)
                 return BadRequest("User already has this weapon!");
+
+            if (userWeapon.BoostEndTime == null)
+                userWeapon.BoostEndTime = "";
 
             purchaseRepository.AddUserWeapon(userWeapon);
             purchaseRepository.Save();

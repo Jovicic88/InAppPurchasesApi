@@ -90,7 +90,7 @@ namespace InAppPurchasesApi.DataAccessLayer
 
         public UserWeapon GetUserWeapon(UserWeapon userWeapon)
         {
-           return context.UserWeapons.First(u => u.WeaponId == userWeapon.WeaponId && u.GameId == userWeapon.GameId && u.UserId == userWeapon.UserId);
+           return context.UserWeapons.FirstOrDefault(u => u.WeaponId == userWeapon.WeaponId && u.GameId == userWeapon.GameId && u.UserId == userWeapon.UserId);
         }
 
         public void AddUserWeapon(UserWeapon userWeapon)
@@ -113,7 +113,7 @@ namespace InAppPurchasesApi.DataAccessLayer
         #region UserGames
         public UserGame GetUserGame(int userId, int gameId)
         {
-            return context.UserGames.First(u => u.UserId == userId && u.GameId == gameId);
+            return context.UserGames.FirstOrDefault(u => u.UserId == userId && u.GameId == gameId);
         }
 
         public void AddUserGame(UserGame userGame)

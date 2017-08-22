@@ -55,10 +55,11 @@
     <Property Name="UserGameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="GameId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="Achivements" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Coins" Type="int" Nullable="false" />
-    <Property Name="Diamonds" Type="int" Nullable="false" />
-    <Property Name="Premium" Type="bit" Nullable="false" />
+    <Property Name="Achivements" Type="varchar" MaxLength="100" />
+    <Property Name="Coins" Type="int" />
+    <Property Name="Diamonds" Type="int" />
+    <Property Name="Premium" Type="bit" />
+    <Property Name="HasGame" Type="bit" />
   </EntityType>
   <EntityType Name="UserWeapon">
     <Key>
@@ -68,11 +69,11 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="GameId" Type="int" Nullable="false" />
     <Property Name="WeaponId" Type="int" Nullable="false" />
-    <Property Name="GunLevel" Type="int" Nullable="false" />
-    <Property Name="Experience" Type="int" Nullable="false" />
-    <Property Name="BoostActive" Type="bit" Nullable="false" />
-    <Property Name="Unlocked" Type="bit" Nullable="false" />
-    <Property Name="BoostEndTime" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="GunLevel" Type="int" />
+    <Property Name="Experience" Type="int" />
+    <Property Name="BoostActive" Type="bit" />
+    <Property Name="Unlocked" Type="bit" />
+    <Property Name="BoostEndTime" Type="varchar" MaxLength="20" />
   </EntityType>
   <Association Name="FK_Level_Level">
     <End Role="Gun" Type="Self.Gun" Multiplicity="1" />

@@ -18,10 +18,10 @@ namespace InAppPurchasesApi.Models
         public int UserId { get; set; }
         public int GameId { get; set; }
         public int WeaponId { get; set; }
-        public int GunLevel { get; set; }
-        public int Experience { get; set; }
-        public bool BoostActive { get; set; }
-        public bool Unlocked { get; set; }
+        public Nullable<int> GunLevel { get; set; }
+        public Nullable<int> Experience { get; set; }
+        public Nullable<bool> BoostActive { get; set; }
+        public Nullable<bool> Unlocked { get; set; }
         public string BoostEndTime { get; set; }
     
         public virtual Game Game { get; set; }

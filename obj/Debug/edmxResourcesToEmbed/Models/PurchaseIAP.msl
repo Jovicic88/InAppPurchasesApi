@@ -22,6 +22,7 @@
     <EntitySetMapping Name="UserGames">
       <EntityTypeMapping TypeName="PurchasesIAPModel.UserGame">
         <MappingFragment StoreEntitySet="UserGame">
+          <ScalarProperty Name="HasGame" ColumnName="HasGame" />
           <ScalarProperty Name="UserGameId" ColumnName="UserGameId" />
           <ScalarProperty Name="GameId" ColumnName="GameId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
