@@ -59,7 +59,7 @@
     <Property Name="Coins" Type="int" />
     <Property Name="Diamonds" Type="int" />
     <Property Name="Premium" Type="bit" />
-    <Property Name="HasGame" Type="bit" />
+    <Property Name="HasGame" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="UserWeapon">
     <Key>

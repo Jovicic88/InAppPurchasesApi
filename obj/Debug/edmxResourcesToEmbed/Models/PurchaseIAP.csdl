@@ -33,7 +33,7 @@
     <Property Name="Premium" Type="Boolean" />
     <NavigationProperty Name="Game" Relationship="Self.FK_UserGame_Game" FromRole="UserGame" ToRole="Game" />
     <NavigationProperty Name="User" Relationship="Self.FK_UserGame_User" FromRole="UserGame" ToRole="User" />
-    <Property Name="HasGame" Type="Boolean" />
+    <Property Name="HasGame" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="UserWeapon">
     <Key>

@@ -43,16 +43,17 @@ namespace InAppPurchasesApi.Controllers
             if (_game == null)
                 return BadRequest();
 
-            if (!string.IsNullOrEmpty(userGame.Coins.ToString()))
+            _game.HasGame = userGame.HasGame;
+
+            if (userGame.Coins != null)
                 _game.Coins = userGame.Coins;
+            if (userGame.Diamonds != null)
+                _game.Diamonds = userGame.Diamonds;
+            if (userGame.Premium != null)
+                _game.Premium = userGame.Premium;
+
             if (!string.IsNullOrEmpty(userGame.Achivements))
                 _game.Achivements = userGame.Achivements;
-            if (!string.IsNullOrEmpty(userGame.Diamonds.ToString()))
-                _game.Diamonds = userGame.Diamonds;
-            if (!string.IsNullOrEmpty(userGame.Premium.ToString()))
-                _game.Premium = userGame.Premium;
-            if (!string.IsNullOrEmpty(userGame.HasGame.ToString()))
-                _game.HasGame = userGame.HasGame;
 
             purchaseRepository.EditUserGame(_game);
 

@@ -41,13 +41,13 @@ namespace InAppPurchasesApi.Controllers
             if (_weapon == null)
                 return BadRequest();
 
-            if (!string.IsNullOrEmpty(userWeapon.GunLevel.ToString()))
+            if (userWeapon.GunLevel != null)
                 _weapon.GunLevel = userWeapon.GunLevel;
-            if(!string.IsNullOrEmpty(userWeapon.Unlocked.ToString()))
+            if (userWeapon.Unlocked != null)
                 _weapon.Unlocked = userWeapon.Unlocked;
             if (!string.IsNullOrEmpty(userWeapon.Experience.ToString()))
                 _weapon.Experience = userWeapon.Experience;
-            if (!string.IsNullOrEmpty(userWeapon.BoostActive.ToString()))
+            if (userWeapon.BoostActive != null)
                 _weapon.BoostActive = userWeapon.BoostActive;
             if (!string.IsNullOrEmpty(userWeapon.BoostEndTime))
                 _weapon.BoostEndTime = userWeapon.BoostEndTime;

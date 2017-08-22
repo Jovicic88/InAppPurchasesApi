@@ -164,7 +164,7 @@ namespace InAppPurchasesApi.DataAccessLayer
 
         public User GetUser(User user)
         {
-            return context.Users.First(u => u.Email == user.Email && u.Password == user.Password);
+            return context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
         }
 
         public void AddUser(User user)
