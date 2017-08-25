@@ -60,11 +60,22 @@
           <Property Name="UserGameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GameId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Achivements" Type="varchar" MaxLength="100" />
+          <Property Name="Achivements" Type="varchar(max)" />
           <Property Name="Coins" Type="int" />
           <Property Name="Diamonds" Type="int" />
           <Property Name="Premium" Type="bit" />
           <Property Name="HasGame" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserMap">
+          <Key>
+            <PropertyRef Name="UserMapId" />
+          </Key>
+          <Property Name="UserMapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MapId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Unlocked" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserWeapon">
           <Key>
@@ -78,7 +89,7 @@
           <Property Name="Experience" Type="int" />
           <Property Name="BoostActive" Type="bit" />
           <Property Name="Unlocked" Type="bit" />
-          <Property Name="BoostEndTime" Type="varchar" MaxLength="20" />
+          <Property Name="BoostEndTime" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Level_Level">
           <End Role="Gun" Type="Self.Gun" Multiplicity="1" />
@@ -116,6 +127,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserMap_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="UserMap" Type="Self.UserMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameId" />
+            </Principal>
+            <Dependent Role="UserMap">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMap_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserMap" Type="Self.UserMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMap">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserWeapon_Game">
           <End Role="Game" Type="Self.Game" Multiplicity="1" />
           <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
@@ -146,6 +181,7 @@
           <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGame" EntityType="Self.UserGame" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMap" EntityType="Self.UserMap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserWeapon" EntityType="Self.UserWeapon" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Level_Level" Association="Self.FK_Level_Level">
             <End Role="Gun" EntitySet="Gun" />
@@ -158,6 +194,14 @@
           <AssociationSet Name="FK_UserGame_User" Association="Self.FK_UserGame_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserGame" EntitySet="UserGame" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMap_Game" Association="Self.FK_UserMap_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="UserMap" EntitySet="UserMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMap_User" Association="Self.FK_UserMap_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserMap" EntitySet="UserMap" />
           </AssociationSet>
           <AssociationSet Name="FK_UserWeapon_Game" Association="Self.FK_UserWeapon_Game">
             <End Role="Game" EntitySet="Game" />
@@ -181,6 +225,7 @@
           <NavigationProperty Name="UserGames" Relationship="Self.FK_UserGame_Game" FromRole="Game" ToRole="UserGame" />
           <NavigationProperty Name="UserWeapons" Relationship="Self.FK_UserWeapon_Game" FromRole="Game" ToRole="UserWeapon" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserMaps" Relationship="PurchasesIAPModel.FK_UserMap_Game" FromRole="Game" ToRole="UserMap" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -191,6 +236,7 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="UserGames" Relationship="Self.FK_UserGame_User" FromRole="User" ToRole="UserGame" />
           <NavigationProperty Name="UserWeapons" Relationship="Self.FK_UserWeapon_User" FromRole="User" ToRole="UserWeapon" />
+          <NavigationProperty Name="UserMaps" Relationship="PurchasesIAPModel.FK_UserMap_User" FromRole="User" ToRole="UserMap" />
         </EntityType>
         <EntityType Name="UserGame">
           <Key>
@@ -199,7 +245,7 @@
           <Property Name="UserGameId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GameId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Achivements" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Achivements" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Coins" Type="Int32" />
           <Property Name="Diamonds" Type="Int32" />
           <Property Name="Premium" Type="Boolean" />
@@ -219,7 +265,7 @@
           <Property Name="Experience" Type="Int32" />
           <Property Name="BoostActive" Type="Boolean" />
           <Property Name="Unlocked" Type="Boolean" />
-          <Property Name="BoostEndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BoostEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Game" Relationship="Self.FK_UserWeapon_Game" FromRole="UserWeapon" ToRole="Game" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserWeapon_User" FromRole="UserWeapon" ToRole="User" />
         </EntityType>
@@ -298,7 +344,16 @@
             <End Role="Gun" EntitySet="Guns" />
             <End Role="Level" EntitySet="Levels" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="UserMaps" EntityType="PurchasesIAPModel.UserMap" />
+          <AssociationSet Name="FK_UserMap_Game" Association="PurchasesIAPModel.FK_UserMap_Game">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="UserMap" EntitySet="UserMaps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMap_User" Association="PurchasesIAPModel.FK_UserMap_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserMap" EntitySet="UserMaps" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Gun">
           <Key>
             <PropertyRef Name="GunId" />
@@ -345,7 +400,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="UserMap">
+          <Key>
+            <PropertyRef Name="UserMapId" />
+          </Key>
+          <Property Name="UserMapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MapId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="Unlocked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="PurchasesIAPModel.FK_UserMap_Game" FromRole="UserMap" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="PurchasesIAPModel.FK_UserMap_User" FromRole="UserMap" ToRole="User" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_UserMap_Game">
+          <End Type="PurchasesIAPModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="PurchasesIAPModel.UserMap" Role="UserMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameId" />
+            </Principal>
+            <Dependent Role="UserMap">
+              <PropertyRef Name="GameId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMap_User">
+          <End Type="PurchasesIAPModel.User" Role="User" Multiplicity="1" />
+          <End Type="PurchasesIAPModel.UserMap" Role="UserMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMap">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -429,6 +521,18 @@
                 <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
                 <ScalarProperty Name="GunId" ColumnName="GunId" />
                 <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMaps">
+            <EntityTypeMapping TypeName="PurchasesIAPModel.UserMap">
+              <MappingFragment StoreEntitySet="UserMap">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MapId" ColumnName="MapId" />
+                <ScalarProperty Name="UserMapId" ColumnName="UserMapId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

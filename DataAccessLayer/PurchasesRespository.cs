@@ -113,7 +113,7 @@ namespace InAppPurchasesApi.DataAccessLayer
         #region UserGames
         public UserGame GetUserGame(int userId, int gameId)
         {
-            return context.UserGames.FirstOrDefault(u => u.UserId == userId && u.GameId == gameId);
+            return context.UserGames.Where(u => u.UserId == userId && u.GameId == gameId).FirstOrDefault();
         }
 
         public void AddUserGame(UserGame userGame)
@@ -132,7 +132,35 @@ namespace InAppPurchasesApi.DataAccessLayer
             context.UserGames.Remove(userGame);
         }
         #endregion
-#region Games
+
+        #region UserMaps
+        public List<UserMap> GetUserMapsToList(int userId, int gameId)
+        {
+            return context.UserMaps.Where(u => u.UserId == userId && u.GameId == gameId).ToList();
+        }
+
+        public UserMap GetUserMap(UserMap userMap)
+        {
+            return context.UserMaps.FirstOrDefault(u => u.MapId == userMap.MapId && u.GameId == userMap.GameId && u.UserId == userMap.UserId);
+        }
+
+        public void AddUserMap(UserMap userMap)
+        {
+            context.UserMaps.Add(userMap);
+        }
+
+        public void EditUserMap(UserMap userMap)
+        {
+            context.Entry(userMap).State = EntityState.Modified;
+        }
+
+        public void DeleteUserMap(int? userMapId)
+        {
+            var userMap = context.UserMaps.Find(userMapId);
+            context.UserMaps.Remove(userMap);
+        }
+        #endregion
+        #region Games
         public List<Game> GetGames()
         {
             return context.Games.ToList();

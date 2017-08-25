@@ -32,5 +32,6 @@ namespace InAppPurchasesApi.Models
         public virtual DbSet<UserWeapon> UserWeapons { get; set; }
         public virtual DbSet<Gun> Guns { get; set; }
         public virtual DbSet<Level> Levels { get; set; }
+        public virtual DbSet<UserMap> UserMaps { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace InAppPurchasesApi.Models
         {
             this.UserGames = new HashSet<UserGame>();
             this.UserWeapons = new HashSet<UserWeapon>();
+            this.UserMaps = new HashSet<UserMap>();
         }
     
         public int GameId { get; set; }
@@ -29,5 +30,7 @@ namespace InAppPurchasesApi.Models
         public virtual ICollection<UserGame> UserGames { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserWeapon> UserWeapons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserMap> UserMaps { get; set; }
     }
 }

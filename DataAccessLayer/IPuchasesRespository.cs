@@ -41,6 +41,12 @@ namespace InAppPurchasesApi.DataAccessLayer
         void AddUser(User user);
         bool CheckIfUserExists(string email);
 
+        List<UserMap> GetUserMapsToList(int userId, int gameId);
+        UserMap GetUserMap(UserMap userMap);
+        void AddUserMap(UserMap userMap);
+        void EditUserMap(UserMap userMap);
+        void DeleteUserMap(int? userMapId);
+
         void Save();
     }
 }

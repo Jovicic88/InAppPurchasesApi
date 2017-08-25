@@ -17,11 +17,13 @@ namespace InAppPurchasesApi.Controllers
             this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
         }
 
-        // GET: api/UserWeapons/5
+        // GET: api/UserWeapons/5/11
         [ResponseType(typeof(List<UserWeapon>))]
-        public IHttpActionResult GetUserWeapons(int userId, int gameId)
+        [HttpGet]
+        [Route("api/UserWeapons/{UserId}/{GameId}")]
+        public IHttpActionResult GetUserWeapons(int UserId, int GameId)
         {
-            var userWeapons = purchaseRepository.GetUserWeaponsToList(userId, gameId);
+            var userWeapons = purchaseRepository.GetUserWeaponsToList(UserId, GameId);
 
             if (userWeapons == null)
                 return NotFound();

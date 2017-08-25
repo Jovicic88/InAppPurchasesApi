@@ -184,6 +184,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Api\GamesController.cs" />
+    <Compile Include="Controllers\Api\UserMapsController.cs" />
     <Compile Include="Controllers\GamesViewController.cs" />
     <Compile Include="Controllers\Api\GunsController.cs" />
     <Compile Include="Controllers\GunsViewController.cs" />
@@ -226,6 +227,9 @@
       <DependentUpon>PurchaseIAP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserGame.cs">
+      <DependentUpon>PurchaseIAP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserMap.cs">
       <DependentUpon>PurchaseIAP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserWeapon.cs">

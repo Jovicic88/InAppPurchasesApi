@@ -82,5 +82,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserMaps">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.UserMap">
+        <MappingFragment StoreEntitySet="UserMap">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="MapId" ColumnName="MapId" />
+          <ScalarProperty Name="UserMapId" ColumnName="UserMapId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
