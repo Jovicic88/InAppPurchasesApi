@@ -2,6 +2,8 @@
 using System.Web.Http.Description;
 using InAppPurchasesApi.Models;
 using InAppPurchasesApi.DataAccessLayer;
+using System.Data.Entity.Infrastructure;
+using System.Net;
 
 namespace InAppPurchasesApi.Controllers
 {
@@ -28,7 +30,7 @@ namespace InAppPurchasesApi.Controllers
             }
             else
             {
-                user = purchaseRepository.GetUser(user);
+                user = purchaseRepository.GetUser(user.Email, user.Password);
                 if (user == null)
                     return BadRequest("Check your password!");
                 return Ok(user);
@@ -48,31 +50,35 @@ namespace InAppPurchasesApi.Controllers
         //    return Ok(user);
         //}
 
-        //// PUT: api/Users/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutUser(User user)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
+        // PUT: api/Users/5
+        [HttpPut]
+        [Route("api/users/{Email}/{Password}/{NewPassword}")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutUser(string Email, string Password, string NewPassword)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        //    user = db.Users.FirstOrDefault(u => u.Email == user.Email);
+            var user = purchaseRepository.GetUser(Email, Password);
 
-        //    if (user == null)
-        //        return NotFound();
+            if (user == null)
+                return NotFound();
 
-        //    db.Entry(user).State = EntityState.Modified;
+            user.Password = NewPassword;
 
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        throw;
-        //    }
+            purchaseRepository.EditUser(user);
 
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
+            try
+            {
+                purchaseRepository.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
         //// DELETE: api/Users/5
         //[ResponseType(typeof(User))]

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PurchasesIAPModelStoreContainer" CdmEntityContainer="PurchasesIAPEntities">
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.Game">
+        <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGames">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.UserGame">
+        <MappingFragment StoreEntitySet="UserGame">
+          <ScalarProperty Name="HasGame" ColumnName="HasGame" />
+          <ScalarProperty Name="UserGameId" ColumnName="UserGameId" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Achivements" ColumnName="Achivements" />
+          <ScalarProperty Name="Coins" ColumnName="Coins" />
+          <ScalarProperty Name="Diamonds" ColumnName="Diamonds" />
+          <ScalarProperty Name="Premium" ColumnName="Premium" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserWeapons">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.UserWeapon">
+        <MappingFragment StoreEntitySet="UserWeapon">
+          <ScalarProperty Name="UserWeaponId" ColumnName="UserWeaponId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="WeaponId" ColumnName="WeaponId" />
+          <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
+          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="BoostActive" ColumnName="BoostActive" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="BoostEndTime" ColumnName="BoostEndTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Guns">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.Gun">
+        <MappingFragment StoreEntitySet="Gun">
+          <ScalarProperty Name="TwoHanded" ColumnName="TwoHanded" />
+          <ScalarProperty Name="PathToWeaponAudio" ColumnName="PathToWeaponAudio" />
+          <ScalarProperty Name="PathToAchivementIconLocked" ColumnName="PathToAchivementIconLocked" />
+          <ScalarProperty Name="PathToAchivementIcon" ColumnName="PathToAchivementIcon" />
+          <ScalarProperty Name="PathToIcon" ColumnName="PathToIcon" />
+          <ScalarProperty Name="PathToPrefab" ColumnName="PathToPrefab" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="BoostCost" ColumnName="BoostCost" />
+          <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
+          <ScalarProperty Name="Pause" ColumnName="Pause" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="NameStatic" ColumnName="NameStatic" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="GunId" ColumnName="GunId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Levels">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.Level">
+        <MappingFragment StoreEntitySet="Level">
+          <ScalarProperty Name="BulletsMax" ColumnName="BulletsMax" />
+          <ScalarProperty Name="BulletsInClip" ColumnName="BulletsInClip" />
+          <ScalarProperty Name="Damage" ColumnName="Damage" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
+          <ScalarProperty Name="GunId" ColumnName="GunId" />
+          <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMaps">
+      <EntityTypeMapping TypeName="PurchasesIAPModel.UserMap">
+        <MappingFragment StoreEntitySet="UserMap">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="MapId" ColumnName="MapId" />
+          <ScalarProperty Name="UserMapId" ColumnName="UserMapId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -190,14 +190,19 @@ namespace InAppPurchasesApi.DataAccessLayer
 
         #region User
 
-        public User GetUser(User user)
+        public User GetUser(string email, string password)
         {
-            return context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+            return context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
 
         public void AddUser(User user)
         {
             context.Users.Add(user);
+        }
+
+        public void EditUser(User user)
+        {
+            context.Entry(user).State = EntityState.Modified;
         }
 
         public bool CheckIfUserExists(string email)

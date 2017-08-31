@@ -37,7 +37,8 @@ namespace InAppPurchasesApi.DataAccessLayer
         void EditGame(Game game);
         void DeleteGame(int? gameId);
 
-        User GetUser(User user);
+        User GetUser(string email, string password);
+        void EditUser(User user);
         void AddUser(User user);
         bool CheckIfUserExists(string email);
 
