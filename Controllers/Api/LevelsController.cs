@@ -11,24 +11,24 @@ namespace InAppPurchasesApi.Controllers
 {
     public class LevelsController : ApiController
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public LevelsController()
+        public LevelsController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: api/Levels
         public IQueryable<Level> GetLevels()
         {
-            return purchaseRepository.GetLevels();
+            return purchaseRespository.GetLevels();
         }
 
         // GET: api/Levels/5
         [ResponseType(typeof(Level))]
         public IHttpActionResult GetLevel(int id)
         {
-            var level = purchaseRepository.GetLevelById(id);
+            var level = purchaseRespository.GetLevelById(id);
             if (level == null)
                 return NotFound();
 
@@ -42,16 +42,16 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var _level = purchaseRepository.GetLevelById(level.LevelId);
+            var _level = purchaseRespository.GetLevelById(level.LevelId);
 
             if (_level == null)
                 return BadRequest();
 
-            purchaseRepository.EditLevel(level);
+            purchaseRespository.EditLevel(level);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -68,11 +68,11 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            purchaseRepository.AddLevel(level);
+            purchaseRespository.AddLevel(level);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateException)
             {
@@ -86,12 +86,12 @@ namespace InAppPurchasesApi.Controllers
         [ResponseType(typeof(Level))]
         public IHttpActionResult DeleteLevel(int id)
         {
-            var level = purchaseRepository.GetLevelById(id);
+            var level = purchaseRespository.GetLevelById(id);
             if (level == null)
                 return NotFound();
 
-            purchaseRepository.DeleteLevel(id);
-            purchaseRepository.Save();
+            purchaseRespository.DeleteLevel(id);
+            purchaseRespository.Save();
 
             return Ok(level);
         }

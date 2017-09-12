@@ -1,78 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="PurchasesIAPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Game">
+<Schema Namespace="PurchasesIAPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PurchasesIAPModelStoreContainer">
+    <EntitySet Name="Games" EntityType="PurchasesIAPModel.Store.Games" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="PurchasesIAPModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserGames" EntityType="PurchasesIAPModel.Store.UserGames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserWeapons" EntityType="PurchasesIAPModel.Store.UserWeapons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Guns" EntityType="PurchasesIAPModel.Store.Guns" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Levels" EntityType="PurchasesIAPModel.Store.Levels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserMaps" EntityType="PurchasesIAPModel.Store.UserMaps" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserGame_Game" Association="PurchasesIAPModel.Store.FK_UserGame_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserGame" EntitySet="UserGames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserWeapon_Game" Association="PurchasesIAPModel.Store.FK_UserWeapon_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserWeapon" EntitySet="UserWeapons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGame_User" Association="PurchasesIAPModel.Store.FK_UserGame_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserGame" EntitySet="UserGames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserWeapon_User" Association="PurchasesIAPModel.Store.FK_UserWeapon_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserWeapon" EntitySet="UserWeapons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Level_Level" Association="PurchasesIAPModel.Store.FK_Level_Level">
+      <End Role="Gun" EntitySet="Guns" />
+      <End Role="Level" EntitySet="Levels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMap_Game" Association="PurchasesIAPModel.Store.FK_UserMap_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserMap" EntitySet="UserMaps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMap_User" Association="PurchasesIAPModel.Store.FK_UserMap_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserMap" EntitySet="UserMaps" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Games">
     <Key>
       <PropertyRef Name="GameId" />
     </Key>
     <Property Name="GameId" Type="int" Nullable="false" />
     <Property Name="Version" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
   </EntityType>
-  <EntityType Name="Gun">
-    <Key>
-      <PropertyRef Name="GunId" />
-    </Key>
-    <Property Name="GunId" Type="int" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="NameStatic" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="Type" Type="int" Nullable="false" />
-    <Property Name="Pause" Type="float" Nullable="false" />
-    <Property Name="GunLevel" Type="int" Nullable="false" />
-    <Property Name="BoostCost" Type="int" Nullable="false" />
-    <Property Name="Unlocked" Type="bit" Nullable="false" />
-    <Property Name="Description" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="PathToPrefab" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="PathToIcon" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="PathToAchivementIcon" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="PathToAchivementIconLocked" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="PathToWeaponAudio" Type="varchar" MaxLength="191" Nullable="false" />
-    <Property Name="TwoHanded" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Level">
-    <Key>
-      <PropertyRef Name="LevelId" />
-    </Key>
-    <Property Name="LevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="GunId" Type="int" Nullable="false" />
-    <Property Name="GunLevel" Type="int" Nullable="false" />
-    <Property Name="Cost" Type="int" Nullable="false" />
-    <Property Name="Damage" Type="int" Nullable="false" />
-    <Property Name="BulletsInClip" Type="int" Nullable="false" />
-    <Property Name="BulletsMax" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="User">
+  <EntityType Name="Users">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
   </EntityType>
-  <EntityType Name="UserGame">
+  <EntityType Name="UserGames">
     <Key>
       <PropertyRef Name="UserGameId" />
     </Key>
     <Property Name="UserGameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="GameId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="Achivements" Type="varchar(max)" />
-    <Property Name="Coins" Type="int" />
-    <Property Name="Diamonds" Type="int" />
-    <Property Name="Premium" Type="bit" />
+    <Property Name="Achivements" Type="varchar(max)" Nullable="true" />
+    <Property Name="Coins" Type="int" Nullable="true" />
+    <Property Name="Diamonds" Type="int" Nullable="true" />
+    <Property Name="Premium" Type="bit" Nullable="true" />
     <Property Name="HasGame" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="UserMap">
-    <Key>
-      <PropertyRef Name="UserMapId" />
-    </Key>
-    <Property Name="UserMapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MapId" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="GameId" Type="int" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="50" />
-    <Property Name="Unlocked" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UserWeapon">
+  <EntityType Name="UserWeapons">
     <Key>
       <PropertyRef Name="UserWeaponId" />
     </Key>
@@ -80,27 +74,58 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="GameId" Type="int" Nullable="false" />
     <Property Name="WeaponId" Type="int" Nullable="false" />
-    <Property Name="GunLevel" Type="int" />
-    <Property Name="Experience" Type="int" />
-    <Property Name="BoostActive" Type="bit" />
-    <Property Name="Unlocked" Type="bit" />
-    <Property Name="BoostEndTime" Type="varchar" MaxLength="50" />
+    <Property Name="GunLevel" Type="int" Nullable="true" />
+    <Property Name="Experience" Type="int" Nullable="true" />
+    <Property Name="BoostActive" Type="bit" Nullable="true" />
+    <Property Name="Unlocked" Type="bit" Nullable="true" />
+    <Property Name="BoostEndTime" Type="varchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <Association Name="FK_Level_Level">
-    <End Role="Gun" Type="Self.Gun" Multiplicity="1" />
-    <End Role="Level" Type="Self.Level" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Gun">
-        <PropertyRef Name="GunId" />
-      </Principal>
-      <Dependent Role="Level">
-        <PropertyRef Name="GunId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <EntityType Name="Guns">
+    <Key>
+      <PropertyRef Name="GunId" />
+    </Key>
+    <Property Name="GunId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="NameStatic" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="Pause" Type="float" Nullable="false" />
+    <Property Name="GunLevel" Type="int" Nullable="false" />
+    <Property Name="BoostCost" Type="int" Nullable="false" />
+    <Property Name="Unlocked" Type="bit" Nullable="false" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToPrefab" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToIcon" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToAchivementIcon" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToAchivementIconLocked" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToWeaponAudio" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="TwoHanded" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="LevelId" Type="int" Nullable="false" />
+    <Property Name="GunId" Type="int" Nullable="false" />
+    <Property Name="GunLevel" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="int" Nullable="false" />
+    <Property Name="Damage" Type="int" Nullable="false" />
+    <Property Name="BulletsInClip" Type="int" Nullable="false" />
+    <Property Name="BulletsMax" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserMaps">
+    <Key>
+      <PropertyRef Name="UserMapId" />
+    </Key>
+    <Property Name="UserMapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MapId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="Unlocked" Type="bit" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
   <Association Name="FK_UserGame_Game">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+    <End Role="Game" Type="PurchasesIAPModel.Store.Games" Multiplicity="1" />
+    <End Role="UserGame" Type="PurchasesIAPModel.Store.UserGames" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="GameId" />
@@ -110,9 +135,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserWeapon_Game">
+    <End Role="Game" Type="PurchasesIAPModel.Store.Games" Multiplicity="1" />
+    <End Role="UserWeapon" Type="PurchasesIAPModel.Store.UserWeapons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="UserWeapon">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserGame_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+    <End Role="User" Type="PurchasesIAPModel.Store.Users" Multiplicity="1" />
+    <End Role="UserGame" Type="PurchasesIAPModel.Store.UserGames" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="UserId" />
@@ -122,9 +159,33 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserWeapon_User">
+    <End Role="User" Type="PurchasesIAPModel.Store.Users" Multiplicity="1" />
+    <End Role="UserWeapon" Type="PurchasesIAPModel.Store.UserWeapons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserWeapon">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Level_Level">
+    <End Role="Gun" Type="PurchasesIAPModel.Store.Guns" Multiplicity="1" />
+    <End Role="Level" Type="PurchasesIAPModel.Store.Levels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gun">
+        <PropertyRef Name="GunId" />
+      </Principal>
+      <Dependent Role="Level">
+        <PropertyRef Name="GunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserMap_Game">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="UserMap" Type="Self.UserMap" Multiplicity="*" />
+    <End Role="Game" Type="PurchasesIAPModel.Store.Games" Multiplicity="1" />
+    <End Role="UserMap" Type="PurchasesIAPModel.Store.UserMaps" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="GameId" />
@@ -135,8 +196,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserMap_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="UserMap" Type="Self.UserMap" Multiplicity="*" />
+    <End Role="User" Type="PurchasesIAPModel.Store.Users" Multiplicity="1" />
+    <End Role="UserMap" Type="PurchasesIAPModel.Store.UserMaps" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="UserId" />
@@ -146,65 +207,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserWeapon_Game">
-    <End Role="Game" Type="Self.Game" Multiplicity="1" />
-    <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Game">
-        <PropertyRef Name="GameId" />
-      </Principal>
-      <Dependent Role="UserWeapon">
-        <PropertyRef Name="GameId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserWeapon_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="UserWeapon">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="PurchasesIAPModelStoreContainer">
-    <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Gun" EntityType="Self.Gun" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserGame" EntityType="Self.UserGame" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserMap" EntityType="Self.UserMap" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserWeapon" EntityType="Self.UserWeapon" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Level_Level" Association="Self.FK_Level_Level">
-      <End Role="Gun" EntitySet="Gun" />
-      <End Role="Level" EntitySet="Level" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserGame_Game" Association="Self.FK_UserGame_Game">
-      <End Role="Game" EntitySet="Game" />
-      <End Role="UserGame" EntitySet="UserGame" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserGame_User" Association="Self.FK_UserGame_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserGame" EntitySet="UserGame" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserMap_Game" Association="Self.FK_UserMap_Game">
-      <End Role="Game" EntitySet="Game" />
-      <End Role="UserMap" EntitySet="UserMap" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserMap_User" Association="Self.FK_UserMap_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserMap" EntitySet="UserMap" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserWeapon_Game" Association="Self.FK_UserWeapon_Game">
-      <End Role="Game" EntitySet="Game" />
-      <End Role="UserWeapon" EntitySet="UserWeapon" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserWeapon_User" Association="Self.FK_UserWeapon_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="UserWeapon" EntitySet="UserWeapon" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

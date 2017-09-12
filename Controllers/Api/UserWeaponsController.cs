@@ -10,11 +10,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class UserWeaponsController : ApiController
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public UserWeaponsController()
+        public UserWeaponsController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: api/UserWeapons/5/11
@@ -23,7 +23,7 @@ namespace InAppPurchasesApi.Controllers
         [Route("api/UserWeapons/{UserId}/{GameId}")]
         public IHttpActionResult GetUserWeapons(int UserId, int GameId)
         {
-            var userWeapons = purchaseRepository.GetUserWeaponsToList(UserId, GameId);
+            var userWeapons = purchaseRespository.GetUserWeaponsToList(UserId, GameId);
 
             if (userWeapons == null)
                 return NotFound();
@@ -38,7 +38,7 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var _weapon = purchaseRepository.GetUserWeapon(userWeapon);
+            var _weapon = purchaseRespository.GetUserWeapon(userWeapon);
 
             if (_weapon == null)
                 return BadRequest();
@@ -54,11 +54,11 @@ namespace InAppPurchasesApi.Controllers
             if (!string.IsNullOrEmpty(userWeapon.BoostEndTime))
                 _weapon.BoostEndTime = userWeapon.BoostEndTime;
 
-            purchaseRepository.EditUserWeapon(_weapon);
+            purchaseRespository.EditUserWeapon(_weapon);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -75,7 +75,7 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var _userWeapon = purchaseRepository.GetUserWeapon(userWeapon);
+            var _userWeapon = purchaseRespository.GetUserWeapon(userWeapon);
 
             if (_userWeapon != null)
                 return BadRequest("User already has this weapon!");
@@ -83,8 +83,8 @@ namespace InAppPurchasesApi.Controllers
             if (userWeapon.BoostEndTime == null)
                 userWeapon.BoostEndTime = "";
 
-            purchaseRepository.AddUserWeapon(userWeapon);
-            purchaseRepository.Save();
+            purchaseRespository.AddUserWeapon(userWeapon);
+            purchaseRespository.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = userWeapon.UserWeaponId }, userWeapon);
         }
@@ -93,12 +93,12 @@ namespace InAppPurchasesApi.Controllers
         [ResponseType(typeof(UserWeapon))]
         public IHttpActionResult DeleteUserWeapon(UserWeapon userWeapon)
         {
-            userWeapon = purchaseRepository.GetUserWeapon(userWeapon);
+            userWeapon = purchaseRespository.GetUserWeapon(userWeapon);
             if (userWeapon == null)
                 return NotFound();
 
-            purchaseRepository.DeleteUserWeapon(userWeapon.UserWeaponId);
-            purchaseRepository.Save();
+            purchaseRespository.DeleteUserWeapon(userWeapon.UserWeaponId);
+            purchaseRespository.Save();
 
             return Ok(userWeapon);
         }

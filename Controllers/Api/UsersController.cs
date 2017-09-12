@@ -9,11 +9,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class UsersController : ApiController
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public UsersController()
+        public UsersController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // POST: api/Users
@@ -23,14 +23,14 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (!purchaseRepository.CheckIfUserExists(user.Email))
+            if (!purchaseRespository.CheckIfUserExists(user.Email))
             {
-                purchaseRepository.AddUser(user);
-                purchaseRepository.Save();
+                purchaseRespository.AddUser(user);
+                purchaseRespository.Save();
             }
             else
             {
-                user = purchaseRepository.GetUser(user.Email, user.Password);
+                user = purchaseRespository.GetUser(user.Email, user.Password);
                 if (user == null)
                     return BadRequest("Check your password!");
                 return Ok(user);
@@ -59,18 +59,18 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = purchaseRepository.GetUser(Email, Password);
+            var user = purchaseRespository.GetUser(Email, Password);
 
             if (user == null)
                 return NotFound();
 
             user.Password = NewPassword;
 
-            purchaseRepository.EditUser(user);
+            purchaseRespository.EditUser(user);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {

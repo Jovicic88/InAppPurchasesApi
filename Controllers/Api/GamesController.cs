@@ -11,11 +11,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class GamesController : ApiController
     {
-        private IPuchasesRespository purchaseRespository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public GamesController()
+        public GamesController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRespository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: api/Games/5

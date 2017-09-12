@@ -11,11 +11,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class UserGamesController : ApiController
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public UserGamesController()
+        public UserGamesController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: api/UserGames/userId/gameId
@@ -24,7 +24,7 @@ namespace InAppPurchasesApi.Controllers
         [Route("api/usergames/{UserId}/{GameId}")]
         public IHttpActionResult GetUserGame(int UserId, int GameId)
         {
-            var userGame = purchaseRepository.GetUserGame(UserId, GameId);
+            var userGame = purchaseRespository.GetUserGame(UserId, GameId);
             if (userGame == null)
                 return NotFound();
 
@@ -38,7 +38,7 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var _game = purchaseRepository.GetUserGame(userGame.UserId, userGame.GameId);
+            var _game = purchaseRespository.GetUserGame(userGame.UserId, userGame.GameId);
 
             if (_game == null)
                 return BadRequest();
@@ -55,11 +55,11 @@ namespace InAppPurchasesApi.Controllers
             if (!string.IsNullOrEmpty(userGame.Achivements))
                 _game.Achivements = userGame.Achivements;
 
-            purchaseRepository.EditUserGame(_game);
+            purchaseRespository.EditUserGame(_game);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +79,8 @@ namespace InAppPurchasesApi.Controllers
             if (userGame.Achivements == null)
                 userGame.Achivements = "";
 
-            purchaseRepository.AddUserGame(userGame);
-            purchaseRepository.Save();
+            purchaseRespository.AddUserGame(userGame);
+            purchaseRespository.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = userGame.UserGameId }, userGame);
         }
@@ -89,12 +89,12 @@ namespace InAppPurchasesApi.Controllers
         [ResponseType(typeof(UserGame))]
         public IHttpActionResult DeleteUserGame(int userId, int gameId)
         {
-            var userGame = purchaseRepository.GetUserGame(userId, gameId);
+            var userGame = purchaseRespository.GetUserGame(userId, gameId);
             if (userGame == null)
                 return NotFound();
 
-            purchaseRepository.DeleteUserGame(userGame.UserGameId);
-            purchaseRepository.Save();
+            purchaseRespository.DeleteUserGame(userGame.UserGameId);
+            purchaseRespository.Save();
 
             return Ok(userGame);
         }

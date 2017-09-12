@@ -9,18 +9,18 @@ namespace InAppPurchasesApi.Controllers
 {
     public class GunsController : ApiController
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public GunsController()
+        public GunsController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: api/Guns/5
         [ResponseType(typeof(Gun))]
         public IHttpActionResult GetGun(int id)
         {
-            var gun = purchaseRepository.GetGunById(id);
+            var gun = purchaseRespository.GetGunById(id);
             if (gun == null)
                 return NotFound();
 
@@ -34,14 +34,14 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if(purchaseRepository.GetGunById(gun.GunId) == null)
+            if(purchaseRespository.GetGunById(gun.GunId) == null)
                 return NotFound();
 
-            purchaseRepository.EditGun(gun);
+            purchaseRespository.EditGun(gun);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -58,11 +58,11 @@ namespace InAppPurchasesApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            purchaseRepository.AddGun(gun);
+            purchaseRespository.AddGun(gun);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateException)
             {
@@ -76,12 +76,12 @@ namespace InAppPurchasesApi.Controllers
         [ResponseType(typeof(Gun))]
         public IHttpActionResult DeleteGun(int id)
         {
-            var gun = purchaseRepository.GetGunById(id);
+            var gun = purchaseRespository.GetGunById(id);
             if (gun == null)
                 return NotFound();
 
-            purchaseRepository.DeleteGun(id);
-            purchaseRepository.Save();
+            purchaseRespository.DeleteGun(id);
+            purchaseRespository.Save();
 
             return Ok(gun);
         }

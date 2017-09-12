@@ -7,11 +7,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class LevelsViewController : Controller
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRepository;
 
-        public LevelsViewController()
+        public LevelsViewController(IPuchasesRespository _purchaseRepository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRepository = _purchaseRepository; //new PurchasesRespository(new PurchasesIAPEntities());
         }
 
         // GET: LevelsView

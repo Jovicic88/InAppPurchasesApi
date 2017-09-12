@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace InAppPurchasesApi.DataAccessLayer
 {
-    interface IPuchasesRespository
+    public interface IPuchasesRespository
     {
         IQueryable<Gun> GetGuns();
         List<Gun> GetGunsToList();

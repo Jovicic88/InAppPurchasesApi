@@ -10,11 +10,11 @@ namespace InAppPurchasesApi.Controllers.Api
 {
     public class UserMapsController : ApiController
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public UserMapsController()
+        public UserMapsController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: api/UserMapss/5/11
@@ -23,7 +23,7 @@ namespace InAppPurchasesApi.Controllers.Api
         [Route("api/UserMaps/{UserId}/{GameId}")]
         public IHttpActionResult GetUserMaps(int UserId, int GameId)
         {
-            var userMaps = purchaseRepository.GetUserMapsToList(UserId, GameId);
+            var userMaps = purchaseRespository.GetUserMapsToList(UserId, GameId);
 
             if (userMaps == null)
                 return NotFound();
@@ -38,7 +38,7 @@ namespace InAppPurchasesApi.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var _map = purchaseRepository.GetUserMap(userMap);
+            var _map = purchaseRespository.GetUserMap(userMap);
 
             if (_map == null)
                 return BadRequest();
@@ -48,11 +48,11 @@ namespace InAppPurchasesApi.Controllers.Api
             if (!string.IsNullOrEmpty(userMap.Name))
                 _map.Name = userMap.Name;
  
-            purchaseRepository.EditUserMap(_map);
+            purchaseRespository.EditUserMap(_map);
 
             try
             {
-                purchaseRepository.Save();
+                purchaseRespository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -69,13 +69,13 @@ namespace InAppPurchasesApi.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var _userMap = purchaseRepository.GetUserMap(userMap);
+            var _userMap = purchaseRespository.GetUserMap(userMap);
 
             if (_userMap != null)
                 return BadRequest("User already has this map!");
 
-            purchaseRepository.AddUserMap(userMap);
-            purchaseRepository.Save();
+            purchaseRespository.AddUserMap(userMap);
+            purchaseRespository.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = userMap.MapId }, userMap);
         }
@@ -84,12 +84,12 @@ namespace InAppPurchasesApi.Controllers.Api
         [ResponseType(typeof(UserMap))]
         public IHttpActionResult DeleteUserMap(UserMap userMap)
         {
-            userMap = purchaseRepository.GetUserMap(userMap);
+            userMap = purchaseRespository.GetUserMap(userMap);
             if (userMap == null)
                 return NotFound();
 
-            purchaseRepository.DeleteUserMap(userMap.UserMapId);
-            purchaseRepository.Save();
+            purchaseRespository.DeleteUserMap(userMap.UserMapId);
+            purchaseRespository.Save();
 
             return Ok(userMap);
         }

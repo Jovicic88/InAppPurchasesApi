@@ -4,215 +4,215 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PurchasesIAPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Game">
-          <Key>
-            <PropertyRef Name="GameId" />
-          </Key>
-          <Property Name="GameId" Type="int" Nullable="false" />
-          <Property Name="Version" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Gun">
-          <Key>
-            <PropertyRef Name="GunId" />
-          </Key>
-          <Property Name="GunId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="NameStatic" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="Pause" Type="float" Nullable="false" />
-          <Property Name="GunLevel" Type="int" Nullable="false" />
-          <Property Name="BoostCost" Type="int" Nullable="false" />
-          <Property Name="Unlocked" Type="bit" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="PathToPrefab" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="PathToIcon" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="PathToAchivementIcon" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="PathToAchivementIconLocked" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="PathToWeaponAudio" Type="varchar" MaxLength="191" Nullable="false" />
-          <Property Name="TwoHanded" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Level">
-          <Key>
-            <PropertyRef Name="LevelId" />
-          </Key>
-          <Property Name="LevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="GunId" Type="int" Nullable="false" />
-          <Property Name="GunLevel" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="int" Nullable="false" />
-          <Property Name="Damage" Type="int" Nullable="false" />
-          <Property Name="BulletsInClip" Type="int" Nullable="false" />
-          <Property Name="BulletsMax" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserGame">
-          <Key>
-            <PropertyRef Name="UserGameId" />
-          </Key>
-          <Property Name="UserGameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="GameId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Achivements" Type="varchar(max)" />
-          <Property Name="Coins" Type="int" />
-          <Property Name="Diamonds" Type="int" />
-          <Property Name="Premium" Type="bit" />
-          <Property Name="HasGame" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserMap">
-          <Key>
-            <PropertyRef Name="UserMapId" />
-          </Key>
-          <Property Name="UserMapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MapId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="GameId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Unlocked" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserWeapon">
-          <Key>
-            <PropertyRef Name="UserWeaponId" />
-          </Key>
-          <Property Name="UserWeaponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="GameId" Type="int" Nullable="false" />
-          <Property Name="WeaponId" Type="int" Nullable="false" />
-          <Property Name="GunLevel" Type="int" />
-          <Property Name="Experience" Type="int" />
-          <Property Name="BoostActive" Type="bit" />
-          <Property Name="Unlocked" Type="bit" />
-          <Property Name="BoostEndTime" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <Association Name="FK_Level_Level">
-          <End Role="Gun" Type="Self.Gun" Multiplicity="1" />
-          <End Role="Level" Type="Self.Level" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gun">
-              <PropertyRef Name="GunId" />
-            </Principal>
-            <Dependent Role="Level">
-              <PropertyRef Name="GunId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserGame_Game">
-          <End Role="Game" Type="Self.Game" Multiplicity="1" />
-          <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Game">
-              <PropertyRef Name="GameId" />
-            </Principal>
-            <Dependent Role="UserGame">
-              <PropertyRef Name="GameId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserGame_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserGame">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserMap_Game">
-          <End Role="Game" Type="Self.Game" Multiplicity="1" />
-          <End Role="UserMap" Type="Self.UserMap" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Game">
-              <PropertyRef Name="GameId" />
-            </Principal>
-            <Dependent Role="UserMap">
-              <PropertyRef Name="GameId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserMap_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserMap" Type="Self.UserMap" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserMap">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserWeapon_Game">
-          <End Role="Game" Type="Self.Game" Multiplicity="1" />
-          <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Game">
-              <PropertyRef Name="GameId" />
-            </Principal>
-            <Dependent Role="UserWeapon">
-              <PropertyRef Name="GameId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserWeapon_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserWeapon" Type="Self.UserWeapon" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserWeapon">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="PurchasesIAPModelStoreContainer">
-          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Gun" EntityType="Self.Gun" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserGame" EntityType="Self.UserGame" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserMap" EntityType="Self.UserMap" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserWeapon" EntityType="Self.UserWeapon" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Level_Level" Association="Self.FK_Level_Level">
-            <End Role="Gun" EntitySet="Gun" />
-            <End Role="Level" EntitySet="Level" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserGame_Game" Association="Self.FK_UserGame_Game">
-            <End Role="Game" EntitySet="Game" />
-            <End Role="UserGame" EntitySet="UserGame" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserGame_User" Association="Self.FK_UserGame_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserGame" EntitySet="UserGame" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserMap_Game" Association="Self.FK_UserMap_Game">
-            <End Role="Game" EntitySet="Game" />
-            <End Role="UserMap" EntitySet="UserMap" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserMap_User" Association="Self.FK_UserMap_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserMap" EntitySet="UserMap" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserWeapon_Game" Association="Self.FK_UserWeapon_Game">
-            <End Role="Game" EntitySet="Game" />
-            <End Role="UserWeapon" EntitySet="UserWeapon" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserWeapon_User" Association="Self.FK_UserWeapon_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserWeapon" EntitySet="UserWeapon" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="PurchasesIAPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PurchasesIAPModelStoreContainer">
+    <EntitySet Name="Games" EntityType="PurchasesIAPModel.Store.Games" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="PurchasesIAPModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserGames" EntityType="PurchasesIAPModel.Store.UserGames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserWeapons" EntityType="PurchasesIAPModel.Store.UserWeapons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Guns" EntityType="PurchasesIAPModel.Store.Guns" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Levels" EntityType="PurchasesIAPModel.Store.Levels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserMaps" EntityType="PurchasesIAPModel.Store.UserMaps" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserGame_Game" Association="PurchasesIAPModel.Store.FK_UserGame_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserGame" EntitySet="UserGames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserWeapon_Game" Association="PurchasesIAPModel.Store.FK_UserWeapon_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserWeapon" EntitySet="UserWeapons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserGame_User" Association="PurchasesIAPModel.Store.FK_UserGame_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserGame" EntitySet="UserGames" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserWeapon_User" Association="PurchasesIAPModel.Store.FK_UserWeapon_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserWeapon" EntitySet="UserWeapons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Level_Level" Association="PurchasesIAPModel.Store.FK_Level_Level">
+      <End Role="Gun" EntitySet="Guns" />
+      <End Role="Level" EntitySet="Levels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMap_Game" Association="PurchasesIAPModel.Store.FK_UserMap_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="UserMap" EntitySet="UserMaps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMap_User" Association="PurchasesIAPModel.Store.FK_UserMap_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserMap" EntitySet="UserMaps" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Games">
+    <Key>
+      <PropertyRef Name="GameId" />
+    </Key>
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="Version" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserGames">
+    <Key>
+      <PropertyRef Name="UserGameId" />
+    </Key>
+    <Property Name="UserGameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Achivements" Type="varchar(max)" Nullable="true" />
+    <Property Name="Coins" Type="int" Nullable="true" />
+    <Property Name="Diamonds" Type="int" Nullable="true" />
+    <Property Name="Premium" Type="bit" Nullable="true" />
+    <Property Name="HasGame" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserWeapons">
+    <Key>
+      <PropertyRef Name="UserWeaponId" />
+    </Key>
+    <Property Name="UserWeaponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="WeaponId" Type="int" Nullable="false" />
+    <Property Name="GunLevel" Type="int" Nullable="true" />
+    <Property Name="Experience" Type="int" Nullable="true" />
+    <Property Name="BoostActive" Type="bit" Nullable="true" />
+    <Property Name="Unlocked" Type="bit" Nullable="true" />
+    <Property Name="BoostEndTime" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Guns">
+    <Key>
+      <PropertyRef Name="GunId" />
+    </Key>
+    <Property Name="GunId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="NameStatic" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="Pause" Type="float" Nullable="false" />
+    <Property Name="GunLevel" Type="int" Nullable="false" />
+    <Property Name="BoostCost" Type="int" Nullable="false" />
+    <Property Name="Unlocked" Type="bit" Nullable="false" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToPrefab" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToIcon" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToAchivementIcon" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToAchivementIconLocked" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="PathToWeaponAudio" Type="varchar" Nullable="false" MaxLength="191" />
+    <Property Name="TwoHanded" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="LevelId" Type="int" Nullable="false" />
+    <Property Name="GunId" Type="int" Nullable="false" />
+    <Property Name="GunLevel" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="int" Nullable="false" />
+    <Property Name="Damage" Type="int" Nullable="false" />
+    <Property Name="BulletsInClip" Type="int" Nullable="false" />
+    <Property Name="BulletsMax" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserMaps">
+    <Key>
+      <PropertyRef Name="UserMapId" />
+    </Key>
+    <Property Name="UserMapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MapId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="Unlocked" Type="bit" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_UserGame_Game">
+    <End Role="Game" Type="PurchasesIAPModel.Store.Games" Multiplicity="1" />
+    <End Role="UserGame" Type="PurchasesIAPModel.Store.UserGames" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="UserGame">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserWeapon_Game">
+    <End Role="Game" Type="PurchasesIAPModel.Store.Games" Multiplicity="1" />
+    <End Role="UserWeapon" Type="PurchasesIAPModel.Store.UserWeapons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="UserWeapon">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserGame_User">
+    <End Role="User" Type="PurchasesIAPModel.Store.Users" Multiplicity="1" />
+    <End Role="UserGame" Type="PurchasesIAPModel.Store.UserGames" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserGame">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserWeapon_User">
+    <End Role="User" Type="PurchasesIAPModel.Store.Users" Multiplicity="1" />
+    <End Role="UserWeapon" Type="PurchasesIAPModel.Store.UserWeapons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserWeapon">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Level_Level">
+    <End Role="Gun" Type="PurchasesIAPModel.Store.Guns" Multiplicity="1" />
+    <End Role="Level" Type="PurchasesIAPModel.Store.Levels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gun">
+        <PropertyRef Name="GunId" />
+      </Principal>
+      <Dependent Role="Level">
+        <PropertyRef Name="GunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMap_Game">
+    <End Role="Game" Type="PurchasesIAPModel.Store.Games" Multiplicity="1" />
+    <End Role="UserMap" Type="PurchasesIAPModel.Store.UserMaps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="UserMap">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMap_User">
+    <End Role="User" Type="PurchasesIAPModel.Store.Users" Multiplicity="1" />
+    <End Role="UserMap" Type="PurchasesIAPModel.Store.UserMaps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserMap">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PurchasesIAPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -441,104 +441,103 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PurchasesIAPModelStoreContainer" CdmEntityContainer="PurchasesIAPEntities">
-          <EntitySetMapping Name="Games">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.Game">
-              <MappingFragment StoreEntitySet="Game">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GameId" ColumnName="GameId" />
-                <ScalarProperty Name="Version" ColumnName="Version" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserGames">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.UserGame">
-              <MappingFragment StoreEntitySet="UserGame">
-                <ScalarProperty Name="HasGame" ColumnName="HasGame" />
-                <ScalarProperty Name="UserGameId" ColumnName="UserGameId" />
-                <ScalarProperty Name="GameId" ColumnName="GameId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Achivements" ColumnName="Achivements" />
-                <ScalarProperty Name="Coins" ColumnName="Coins" />
-                <ScalarProperty Name="Diamonds" ColumnName="Diamonds" />
-                <ScalarProperty Name="Premium" ColumnName="Premium" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserWeapons">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.UserWeapon">
-              <MappingFragment StoreEntitySet="UserWeapon">
-                <ScalarProperty Name="UserWeaponId" ColumnName="UserWeaponId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="GameId" ColumnName="GameId" />
-                <ScalarProperty Name="WeaponId" ColumnName="WeaponId" />
-                <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
-                <ScalarProperty Name="Experience" ColumnName="Experience" />
-                <ScalarProperty Name="BoostActive" ColumnName="BoostActive" />
-                <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
-                <ScalarProperty Name="BoostEndTime" ColumnName="BoostEndTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Guns">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.Gun">
-              <MappingFragment StoreEntitySet="Gun">
-                <ScalarProperty Name="TwoHanded" ColumnName="TwoHanded" />
-                <ScalarProperty Name="PathToWeaponAudio" ColumnName="PathToWeaponAudio" />
-                <ScalarProperty Name="PathToAchivementIconLocked" ColumnName="PathToAchivementIconLocked" />
-                <ScalarProperty Name="PathToAchivementIcon" ColumnName="PathToAchivementIcon" />
-                <ScalarProperty Name="PathToIcon" ColumnName="PathToIcon" />
-                <ScalarProperty Name="PathToPrefab" ColumnName="PathToPrefab" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
-                <ScalarProperty Name="BoostCost" ColumnName="BoostCost" />
-                <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
-                <ScalarProperty Name="Pause" ColumnName="Pause" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="NameStatic" ColumnName="NameStatic" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GunId" ColumnName="GunId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Levels">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.Level">
-              <MappingFragment StoreEntitySet="Level">
-                <ScalarProperty Name="BulletsMax" ColumnName="BulletsMax" />
-                <ScalarProperty Name="BulletsInClip" ColumnName="BulletsInClip" />
-                <ScalarProperty Name="Damage" ColumnName="Damage" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
-                <ScalarProperty Name="GunId" ColumnName="GunId" />
-                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserMaps">
-            <EntityTypeMapping TypeName="PurchasesIAPModel.UserMap">
-              <MappingFragment StoreEntitySet="UserMap">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
-                <ScalarProperty Name="GameId" ColumnName="GameId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="MapId" ColumnName="MapId" />
-                <ScalarProperty Name="UserMapId" ColumnName="UserMapId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PurchasesIAPModelStoreContainer" CdmEntityContainer="PurchasesIAPEntities">
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.Game)">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserGames">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.UserGame)">
+        <MappingFragment StoreEntitySet="UserGames">
+          <ScalarProperty Name="UserGameId" ColumnName="UserGameId" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Achivements" ColumnName="Achivements" />
+          <ScalarProperty Name="Coins" ColumnName="Coins" />
+          <ScalarProperty Name="Diamonds" ColumnName="Diamonds" />
+          <ScalarProperty Name="Premium" ColumnName="Premium" />
+          <ScalarProperty Name="HasGame" ColumnName="HasGame" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserWeapons">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.UserWeapon)">
+        <MappingFragment StoreEntitySet="UserWeapons">
+          <ScalarProperty Name="UserWeaponId" ColumnName="UserWeaponId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="WeaponId" ColumnName="WeaponId" />
+          <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
+          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="BoostActive" ColumnName="BoostActive" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="BoostEndTime" ColumnName="BoostEndTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Guns">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.Gun)">
+        <MappingFragment StoreEntitySet="Guns">
+          <ScalarProperty Name="GunId" ColumnName="GunId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NameStatic" ColumnName="NameStatic" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Pause" ColumnName="Pause" />
+          <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
+          <ScalarProperty Name="BoostCost" ColumnName="BoostCost" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PathToPrefab" ColumnName="PathToPrefab" />
+          <ScalarProperty Name="PathToIcon" ColumnName="PathToIcon" />
+          <ScalarProperty Name="PathToAchivementIcon" ColumnName="PathToAchivementIcon" />
+          <ScalarProperty Name="PathToAchivementIconLocked" ColumnName="PathToAchivementIconLocked" />
+          <ScalarProperty Name="PathToWeaponAudio" ColumnName="PathToWeaponAudio" />
+          <ScalarProperty Name="TwoHanded" ColumnName="TwoHanded" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Levels">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.Level)">
+        <MappingFragment StoreEntitySet="Levels">
+          <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+          <ScalarProperty Name="GunId" ColumnName="GunId" />
+          <ScalarProperty Name="GunLevel" ColumnName="GunLevel" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Damage" ColumnName="Damage" />
+          <ScalarProperty Name="BulletsInClip" ColumnName="BulletsInClip" />
+          <ScalarProperty Name="BulletsMax" ColumnName="BulletsMax" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMaps">
+      <EntityTypeMapping TypeName="IsTypeOf(PurchasesIAPModel.UserMap)">
+        <MappingFragment StoreEntitySet="UserMaps">
+          <ScalarProperty Name="UserMapId" ColumnName="UserMapId" />
+          <ScalarProperty Name="MapId" ColumnName="MapId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="Unlocked" ColumnName="Unlocked" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -552,7 +551,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

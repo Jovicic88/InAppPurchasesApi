@@ -7,11 +7,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class GunsViewController : Controller
     {
-        private IPuchasesRespository purchaseRepository;
+        private readonly IPuchasesRespository purchaseRepository;
 
-        public GunsViewController()
+        public GunsViewController(IPuchasesRespository _purchaseRepository)
         {
-            this.purchaseRepository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRepository = _purchaseRepository; /*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: GunsView

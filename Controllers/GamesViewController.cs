@@ -7,11 +7,11 @@ namespace InAppPurchasesApi.Controllers
 {
     public class GamesViewController : Controller
     {
-        private IPuchasesRespository purchaseRespository;
+        private readonly IPuchasesRespository purchaseRespository;
 
-        public GamesViewController()
+        public GamesViewController(IPuchasesRespository _purchaseRespository)
         {
-            this.purchaseRespository = new PurchasesRespository(new PurchasesIAPEntities());
+            purchaseRespository = _purchaseRespository;/*new PurchasesRespository(new PurchasesIAPEntities());*/
         }
 
         // GET: GamesView
